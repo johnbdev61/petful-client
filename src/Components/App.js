@@ -1,17 +1,20 @@
 import React, { Component } from 'react'
-import Header from './Header'
 import HomePage from './HomePage'
 import AdoptPage from './AdoptPage'
-import { Switch, Route } from 'react-router-dom'
+import { Switch, Link } from 'react-router-dom'
 
 class App extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {}
+  }
   render() {
       return (
         <div className='app'>  
-          <Header />      
+          <Link to='/'><h1>Petful</h1></Link>      
           <Switch>
-            <Route exact path={'/'} component={HomePage} />
-            <Route path={'/adopt'} component={AdoptPage} />
+            <HomePage exact path='/' />
+            <AdoptPage path={'/adopt'} />
           </Switch>
         </div>
       )
