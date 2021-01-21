@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 const AppContext = React.createContext({
   currDog: {},
   currCat: {},
-  queue: [],
+  queue: null,
   people: [],
   person: '',
   adopted: [],
@@ -34,6 +34,8 @@ const AppContext = React.createContext({
 
   cyclePets: () => {},
 })
+
+export default AppContext
 
 export class AppContextProvider extends Component {
   state = {
@@ -153,5 +155,3 @@ export class AppContextProvider extends Component {
     );
   }
 }
-
-export default AppContext

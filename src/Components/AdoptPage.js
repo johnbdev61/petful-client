@@ -5,7 +5,7 @@ import AdoptLine from './AdoptLine'
 import PeopleService from '../services/people-service'
 import DogService from '../services/dog-service'
 import CatService from '../services/cat-service'
-import Queue from '../services/cat-service'
+import Queue from '../services/queue'
 import Congratulations from './Congratulations'
 
 class AdoptPage extends Component {
