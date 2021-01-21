@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 const AppContext = React.createContext({
   currDog: {},
   currCat: {},
-  queue: null,
+  queue: {first:{}},
   people: [],
   person: '',
   adopted: [],
@@ -41,7 +41,7 @@ export class AppContextProvider extends Component {
   state = {
     currDog: {},
     currCat: {},
-    queue: null,
+    queue: { first: {}, requeue: () => {} },
     people: [],
     person: '',
     adopted: [],
@@ -65,6 +65,7 @@ export class AppContextProvider extends Component {
   }
 
   setQueue = (queue) => {
+    console.log('QUEUE', queue)
     this.setState({ queue })
   }
 
@@ -121,9 +122,9 @@ export class AppContextProvider extends Component {
       }, 5000)
     }
   }
-   render() {
+  render() {
     const value = {
-      currDog: this.state.currentDog,
+      currDog: this.state.currDog,
       currCat: this.state.currCat,
       queue: this.state.queue,
       people: this.state.people,
@@ -146,12 +147,12 @@ export class AppContextProvider extends Component {
       clearError: this.clearError,
       randomPet: this.randomPet,
       cyclePets: this.cyclePets,
-    };
+    }
 
     return (
       <AppContext.Provider value={value}>
         {this.props.children}
       </AppContext.Provider>
-    );
+    )
   }
 }

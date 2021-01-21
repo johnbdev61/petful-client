@@ -15,9 +15,9 @@ class AdoptPage extends Component {
     this.context.clearCurrDog()
     this.context.clearCurrCat()
     this.context.clearError()
-    this.context.clearQueue()
+    // this.context.clearQueue()
 
-    this.interval = setInterval(this.cyclePets.bind(this), 1500)
+    this.interval = setInterval(this.cyclePeople.bind(this), 1500)
     Promise.all([
       CatService.getCat(),
       DogService.getDog(),
@@ -27,12 +27,13 @@ class AdoptPage extends Component {
         this.context.setCurrDog(res[0])
         this.context.setCurrCat(res[0])
         let peopleQueue = new Queue()
-        res[2].forEacth((person) => peopleQueue.enqueue(person))
+        res[2].forEach((person) => peopleQueue.enqueue(person))
+        console.log(peopleQueue)
         this.context.setQueue(peopleQueue)
       })
       .catch((error) => console.error(error))
   }
-  cyclePets = () => {
+  cyclePeople = () => {
     if (this.context.person !== this.context.queue.first.value) {
       let odds = Math.floor(Math.random() * 100)
       if (odds < 50) {
@@ -83,6 +84,7 @@ class AdoptPage extends Component {
   }
 
   renderDog() {
+    console.log(this.context)
     return (
       <PetCard
         animal={this.context.currDog}
@@ -120,11 +122,11 @@ class AdoptPage extends Component {
         <section>
           <div>
             <h2>Puppies</h2>
-            {this.renderDog}
+            {this.renderDog()}
           </div>
           <div>
             <h2>Kitties</h2>
-            {this.renderCat}
+            {this.renderCat()}
           </div>
         </section>
         <div>
