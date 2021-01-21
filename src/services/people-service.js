@@ -1,6 +1,6 @@
 import config from '../config'
 
-const peopleService = {
+const PeopleService = {
   getPeople() {
     return fetch(`${config.REACT_APP_API_ENDPOINT}/people`, {
       method: 'GET',
@@ -8,7 +8,7 @@ const peopleService = {
         'content-type': 'application/json',
       },
     }).then((res) =>
-      !res.ok ? res.json().then((e) => Promise.reject(e)) : res.json()
+      !res.ok ? res.json().then((event) => Promise.reject(event)) : res.json()
     )
   },
   addPerson(person) {
@@ -19,9 +19,9 @@ const peopleService = {
       },
       body: JSON.stringify({ person: person }),
     }).then((res) =>
-      !res.ok ? res.json().then((e) => Promise.reject(e)) : res.json()
+      !res.ok ? res.json().then((event) => Promise.reject(event)) : res.json()
     )
   },
 }
 
-export default peopleService
+export default PeopleService

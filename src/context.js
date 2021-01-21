@@ -4,7 +4,7 @@ const AppContext = React.createContext({
   currDog: {},
   currCat: {},
   queue: [],
-  users: [],
+  people: [],
   person: '',
   adopted: [],
   error: null,
@@ -18,8 +18,8 @@ const AppContext = React.createContext({
   setQueue: () => {},
   clearQueue: () => {},
 
-  setUsers: () => {},
-  clearUsers: () => {},
+  setPeople: () => {},
+  clearPeople: () => {},
 
   setPerson: () => {},
   clearPerson: () => {},
@@ -32,15 +32,15 @@ const AppContext = React.createContext({
 
   randomPet: () => {},
 
-  cycleList: () => {},
+  cyclePets: () => {},
 })
 
 export class AppContextProvider extends Component {
   state = {
-    dog: {},
-    cat: {},
-    queue: [],
-    users: [],
+    currDog: {},
+    currCat: {},
+    queue: null,
+    people: [],
     person: '',
     adopted: [],
     error: null,
@@ -70,11 +70,11 @@ export class AppContextProvider extends Component {
     this.setState({ queue: null })
   }
 
-  setUsers = (users) => {
-    this.setState({ users })
+  setPeople = (people) => {
+    this.setState({ people })
   }
 
-  clearUsers = () => {
+  clearPeople = () => {
     this.setState({ users: [] })
   }
 
@@ -94,6 +94,15 @@ export class AppContextProvider extends Component {
     this.setState({ adopted: [] })
   }
 
+  setError = (error) => {
+    console.log(error)
+    this.setState({ error })
+  }
+
+  clearError = () => {
+    this.setState({ error: null })
+  }
+
   randomPet = () => {
     let random = Math.floor(Math.random() * 100)
     if (random < 50) {
@@ -103,12 +112,45 @@ export class AppContextProvider extends Component {
     }
   }
 
-  cycleList = () => {
+  cyclePets = () => {
     if (this.context.person !== this.context.queue.first.value) {
       setTimeout(function () {
         this.randomPet()
       }, 5000)
     }
+  }
+   render() {
+    const value = {
+      currDog: this.state.currentDog,
+      currCat: this.state.currCat,
+      queue: this.state.queue,
+      people: this.state.people,
+      person: this.state.person,
+      adopted: this.state.adopted,
+      error: this.state.error,
+      setCurrDog: this.setCurrDog,
+      clearCurrDog: this.clearCurrDog,
+      setCurrCat: this.setCurrCat,
+      clearCurrCat: this.clearCurrCat,
+      setQueue: this.setQueue,
+      clearQueue: this.clearQueue,
+      setPeople: this.setPeople,
+      clearPeople: this.clearPeople,
+      setPerson: this.setPerson,
+      clearPerson: this.clearPerson,
+      setAdopted: this.setAdopted,
+      clearAdopted: this.clearAdopted,
+      setError: this.setError,
+      clearError: this.clearError,
+      randomPet: this.randomPet,
+      cyclePets: this.cyclePets,
+    };
+
+    return (
+      <AppContext.Provider value={value}>
+        {this.props.children}
+      </AppContext.Provider>
+    );
   }
 }
 

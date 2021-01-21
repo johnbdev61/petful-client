@@ -1,171 +1,137 @@
 import React, { Component } from 'react'
-import Pet from './Pet'
-import PetLine from './PetLine'
-import peopleService from '../services/people-service'
-import petsService from '../services/pets-service'
+import AppContext from '../context'
+import PetCard from './PetCard'
+import AdoptLine from './AdoptLine'
+import PeopleService from '../services/people-service'
+import DogService from '../services/dog-service'
+import CatService from '../services/cat-service'
+import Queue from '../services/cat-service'
+import Congratulations from './Congratulations'
 
 class AdoptPage extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      userName: '',
-      people: [],
-      names: [
-        'Agatha',
-        'Brinette',
-        'Chris',
-        'Desdemona',
-        'Evelyn',
-        'Francis',
-        'Grant',
-      ],
-      dog: [],
-      cat: [],
-      loaded: false,
-      userInQueue: null,
-      userAdopted: false,
-      adoptedPet: null,
-    }
-  }
+  static contextType = AppContext
 
-  //get value from server and update
-  updateData = () => {
-    peopleService.getPeople().then((res) => {
-      this.setState({
-        people: res,
-      })
-    })
-    petsService.getPets().then((res) => {
-      this.setState({ dog: res.dog, cat: res.cat, loaded: true })
-    })
-  }
-  //remove
-  handleAdopt = () => {
-    let type = Math.random() >= 0.5 ? 'cat' : 'dog'
-    petsService.adopt(type).then(() => {
-      this.updateData()
-    })
-  }
+  componentDidMount() {
+    this.context.clearCurrDog()
+    this.context.clearCurrCat()
+    this.context.clearError()
+    this.context.clearQueue()
 
-  handleUserAdopt = (type) => {
-    petsService
-      .adopt(type)
-      .then(() => {
-        this.setState({
-          userInQueue: null,
-          userAdopted: true,
-          adoptedPet: this.state[type],
-        })
+    this.interval = setInterval(this.cyclePets.bind(this), 1500)
+    Promise.all([
+      CatService.getCat(),
+      DogService.getDog(),
+      PeopleService.getPeople(),
+    ])
+      .then((res) => {
+        this.context.setCurrDog(res[0])
+        this.context.setCurrCat(res[0])
+        let peopleQueue = new Queue()
+        res[2].forEacth((person) => peopleQueue.enqueue(person))
+        this.context.setQueue(peopleQueue)
       })
-      .then(() => {
-        this.updateData()
-      })
+      .catch((error) => console.error(error))
   }
-
-  handleJoinQueue = () => {
-    if (!this.state.userInQueue) {
-      peopleService.addPerson(this.state.userName).then((res) => {
-        this.setState({
-          userInQueue: this.state.userName,
-        })
-        this.updateData()
-      })
-    }
-  }
-
-  fakeIteration = () => {
-    if (
-      this.state.userInQueue &&
-      this.state.userInQueue !== this.state.people[0]
-    ) {
-      //this.handleAdopt();
-      if (this.state.people.length <= 6) {
-        peopleService
-          .addPerson(
-            this.state.names[
-              Math.floor(Math.random() * this.state.names.length)
-            ]
-          )
-          .then(() => {
-            setTimeout(this.handleAdopt, 2000)
-          })
-          .then(() => {
-            this.updateData()
-          })
+  cyclePets = () => {
+    if (this.context.person !== this.context.queue.first.value) {
+      let odds = Math.floor(Math.random() * 100)
+      if (odds < 50) {
+        this.handleDogClick()
+      } else {
+        this.handleCatClick()
       }
     }
   }
-
-  handleNameChange = (e) => {
-    e.preventDefault()
-    this.setState({
-      userName: e.target.value,
-    })
+  componentWillUnmount() {
+    clearInterval(this.interval)
   }
 
-  componentDidMount() {
-    this.updateData()
-    setInterval(this.fakeIteration, 5000)
+  renderQueue() {
+    return (
+      <AdoptLine
+        first={this.context.queue.first.value}
+        second={this.context.queue.first.next.value}
+        third={this.context.queue.first.next.next.value}
+      />
+    )
+  }
+
+  handleDogClick = () => {
+    return DogService.deleteDog()
+      .then(res => {
+        let owner = this.context.queue.requeue()
+        res.owner = owner
+        this.context.setAdopted(res)
+      })
+      .then(res => {
+        DogService.getDog().then(res => this.context.setCurrDog(res))
+        this.setState({ nowAdopting: this.context.queue.first.value })
+      })
+  }
+
+  handleCatClick = () => {
+    return CatService.deleteCat()
+      .then(res => {
+        let owner = this.context.queue.requeue()
+        res.owner = owner
+        this.context.setAdopted(res)
+      })
+      .then(res => {
+        CatService.getCat().then(res => this.context.setCurrCat(res))
+        this.setState({ nowAdopting: this.context.queue.first.value })
+      })
+  }
+
+  renderDog() {
+    return (
+      <PetCard
+        animal={this.context.currDog}
+        animalType={'dog'}
+        handleAdoptClick={this.handleDogClick}
+      />
+    )
+  }
+
+  renderCat() {
+    return (
+      <PetCard
+        animal={this.context.currCat}
+        animalType={'cat'}
+        handleAdoptClick={this.handleCatClick}
+      />
+    )
   }
 
   render() {
-    const { people, userInQueue } = this.state
-    return (
+    const petAdopted = this.context.adopted.map((pet, index) => (
       <div>
-        {this.state.userAdopted && (
-          <div style={{ maxWidth: '50vw' }}>
-            <h1>Congrats, you adopted:</h1>
-            <Pet pet={this.state.adoptedPet} />
-            <p>Please contact our office to arrange pickup. :)</p>
-          </div>
-        )}
-
-        <div>
-          {/* <button onClick={this.handleAdopt}>Adopt</button> */}
-          {!this.state.userInQueue && (
-            <>
-              <span>Enter your name:</span>
-              <input
-                onChange={this.handleNameChange}
-                value={this.state.userName}
-              />
-              <button onClick={this.handleJoinQueue}>Join Queue</button>
-            </>
-          )}
-          <div className='queue'>
-            <h4>Current Adoption Queue: {this.state.people.length}</h4>
-            <ul>
-              {people.map((person, idx) => {
-                if (idx === 0)
-                  return (
-                    <li key={idx} style={{ fontSize: 40 }}>
-                      Currently Up: {person}
-                    </li>
-                  )
-                else if (idx < 10) return <li key={idx}>{person}</li>
-                else return
-              })}
-            </ul>
-          </div>
-
-          <div className='pet-box'>
-            {userInQueue === people[0] && (
-              <button onClick={() => this.handleUserAdopt('cat')}>
-                Adopt {this.state.cat.name}
-              </button>
-            )}
-            {userInQueue === people[0] && (
-              <button onClick={() => this.handleUserAdopt('dog')}>
-                Adopt {this.state.dog.name}
-              </button>
-            )}
-          </div>
-          <div className='pet-box'>
-            <Pet pet={this.state.cat} />
-            <Pet pet={this.state.dog} />
-          </div>
-        </div>
+        <Congratulations
+        imgSrc={pet.imageURL}
+        name={pet.name}
+        owner={pet.owner}
+        />
       </div>
+    ))
+    return (
+      <>
+        <div>
+          <h1>Choose Your Next Best Friend!</h1>
+        </div>
+        <section>
+          <div>
+            <h2>Puppies</h2>
+            {this.renderDog}
+          </div>
+          <div>
+            <h2>Kitties</h2>
+            {this.renderCat}
+          </div>
+        </section>
+        <div>
+          <h2>Congratulations!</h2>
+          {petAdopted}
+        </div>
+      </>
     )
   }
 }

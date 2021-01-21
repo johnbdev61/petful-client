@@ -1,24 +1,19 @@
 import React, { Component } from 'react'
+import { Route, Switch } from 'react-router-dom'
 import HomePage from './HomePage'
 import AdoptPage from './AdoptPage'
-import { Switch, Link } from 'react-router-dom'
 
-class App extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {}
-  }
+export default class App extends Component {
   render() {
-      return (
-        <div className='app'>  
-          <Link to='/'><h1>Petful</h1></Link>      
+    return (
+      <div className='App'>
+        <main role='main' className='App-main'>
           <Switch>
-            <HomePage exact path='/' />
-            <AdoptPage path={'/adopt'} />
+            <Route exact path='/' component={HomePage} />
+            <Route path='/adopt' component={AdoptPage} />
           </Switch>
-        </div>
-      )
+        </main>
+      </div>
+    )
   }
 }
-
-export default App
