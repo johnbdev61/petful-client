@@ -2,7 +2,7 @@ import config from '../config'
 
 const PeopleService = {
   getPeople() {
-    return fetch(`${config.REACT_APP_API_ENDPOINT}/people`, {
+    return fetch(`${config.API_ENDPOINT}/people`, {
       method: 'GET',
       headers: {
         'content-type': 'application/json',
@@ -12,7 +12,7 @@ const PeopleService = {
     )
   },
   addPerson(person) {
-    return fetch(`${config.REACT_APP_API_ENDPOINT}/people`, {
+    return fetch(`${config.API_ENDPOINT}/people`, {
       method: 'POST',
       headers: {
         'content-type': 'application/json',

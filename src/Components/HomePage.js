@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import AppContext from '../context'
-import peopleService from '../context'
+import PeopleService from '../services/people-service'
 import { Link } from 'react-router-dom'
-
 
 class HomePage extends Component {
   static contextType = AppContext
@@ -11,15 +10,17 @@ class HomePage extends Component {
     event.preventDefault()
     this.context.clearError()
     this.context.clearPerson()
-    let name = document.getElementById('name').value
-    return peopleService.addPerson(name).then((results) => {
+    let person = document.getElementById('name').value
+    console.log('NAME', person)
+    this.context.setPerson(person)
+    return PeopleService.addPerson(person).then((results) => {
       const { location, history } = this.props
       const destination = (location.state || {}).from || '/adopt'
       history.push(destination)
     })
   }
 
-  render() {    
+  render() {
     return (
       <div>
         <div className='intro'>
@@ -44,14 +45,12 @@ class HomePage extends Component {
             <button>Preview Adoptable Pets</button>{' '}
           </Link>
         </section>
-        <form action="">
-          <h3>Are your ready to adopt your ne friend? Enter your name below to add yourself to the queue of future pet owners!</h3>
-          <input 
-          areia-label='name'
-          type='text'
-          id='name'
-          required
-          />
+        <form onSubmit={this.handleJoinQueue}>
+          <h3>
+            Are your ready to adopt your new friend? Enter your name below to
+            add yourself to the queue of future pet owners!
+          </h3>
+          <input aria-label='name' type='text' name='name' id='name' required />
           <button type='submit'>Join Queue!</button>
         </form>
       </div>

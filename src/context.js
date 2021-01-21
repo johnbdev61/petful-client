@@ -70,7 +70,7 @@ export class AppContextProvider extends Component {
   }
 
   clearQueue = () => {
-    this.setState({ queue: null })
+    this.setState({ first: {}, requeue: () => {} })
   }
 
   setPeople = (people) => {

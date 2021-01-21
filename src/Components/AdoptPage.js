@@ -15,7 +15,7 @@ class AdoptPage extends Component {
     this.context.clearCurrDog()
     this.context.clearCurrCat()
     this.context.clearError()
-    // this.context.clearQueue()
+    this.context.clearQueue()
 
     this.interval = setInterval(this.cyclePeople.bind(this), 1500)
     Promise.all([
@@ -106,7 +106,7 @@ class AdoptPage extends Component {
 
   render() {
     const petAdopted = this.context.adopted.map((pet, index) => (
-      <div>
+      <div className='congrats' key={index}>
         <Congratulations
         imgSrc={pet.imageURL}
         name={pet.name}
