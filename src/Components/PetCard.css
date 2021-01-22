@@ -2,6 +2,10 @@
   font-family: 'Staatliches', cursive;
 }
 
+img {
+  width: 60%;
+}
+
 .story {
   font-family: 'Montserrat', sans-serif;
 }

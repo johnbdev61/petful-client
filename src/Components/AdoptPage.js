@@ -89,8 +89,8 @@ class AdoptPage extends Component {
     console.log(this.context)
     return (
       <PetCard
-        animal={this.context.currDog}
-        animalType={'dog'}
+        pet={this.context.currDog}
+        petType={'dog'}
         handleAdoptClick={this.handleDogClick}
       />
     )
@@ -99,8 +99,8 @@ class AdoptPage extends Component {
   renderCat() {
     return (
       <PetCard
-        animal={this.context.currCat}
-        animalType={'cat'}
+        pet={this.context.currCat}
+        petType={'cat'}
         handleAdoptClick={this.handleCatClick}
       />
     )
@@ -121,7 +121,6 @@ class AdoptPage extends Component {
         <div className='adopt-header'>
           <h1>Choose Your Next Best Friend!</h1>
         </div>
-        {this.context.queue.first.next ? this.renderQueue() : 'Loading...'}
         <div className='center'>
           <div>
             <h2 className='next-pet'>Puppies</h2>
@@ -132,8 +131,10 @@ class AdoptPage extends Component {
             {this.renderCat()}
           </div>
         </div>
+        {this.context.queue.first.next ? this.renderQueue() : 'Loading...'}
         <div>
           <hr />
+          <h2 className='congrats'>Congrats on Your New Bestie!</h2>
           {petAdopted}
         </div>
       </>

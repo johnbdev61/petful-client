@@ -34,16 +34,20 @@ class HomePage extends Component {
           <section className='details'>
             <p>
               These cuddle buddies are in high demand, so customers will need to
-              click 'Adopt Now!' and enter a queue. There, you will wait your
-              turn for the next dog or cat up for adoption. Congratulations on
-              taking the first step to finding a new best friend!
+              enter their name below and click 'Join Queue!'. There, you will
+              wait your turn for the next dog or cat up for adoption.
+              Congratulations on taking the first step to finding a new best
+              friend!
+            </p>
+            <p>
+              If you are not ready yet, that is purrfectly fine! Just click 'Preview Adoptions' to see how the process works!
             </p>
           </section>
         </div>
         <section className='adopt-about'>
           <h3 className='get-started'>Preview our Pets</h3>
           <Link to='/adopt'>
-            <button>Preview Adoptable Pets</button>{' '}
+            <button>Preview Adoptions</button>{' '}
           </Link>
         </section>
         <form onSubmit={this.handleJoinQueue}>
@@ -51,7 +55,14 @@ class HomePage extends Component {
             Are your ready to adopt your new friend? Enter your name below to
             add yourself to the queue of future pet owners!
           </h3>
-          <input aria-label='name' type='text' name='name' id='name' placeholder='Enter Name' required />
+          <input
+            aria-label='name'
+            type='text'
+            name='name'
+            id='name'
+            placeholder='Enter Name'
+            required
+          />
           <button type='submit'>Join Queue!</button>
         </form>
       </div>

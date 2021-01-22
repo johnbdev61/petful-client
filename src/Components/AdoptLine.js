@@ -4,7 +4,7 @@ import './AdoptLine.css'
 class AdoptLine extends Component {
   render() {
     return (
-      <div className='center'>
+      <div className='line-center'>
         <ul className='adopt-list'>
           <h2 className='line-header'>Adoption Line</h2>
           <li>{this.props.first}</li>

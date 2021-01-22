@@ -1,5 +1,6 @@
 .adopt-header {
   font-family: 'Montserrat', sans-serif;
+  font-size: 15px;
   text-align: center;
 }
 
@@ -15,4 +16,9 @@
 
 .next-pet {
   font-family: 'Staatliches', cursive;
+}
+
+.congrats {
+  font-family: 'Staatliches', cursive;
+  text-align: center;
 }

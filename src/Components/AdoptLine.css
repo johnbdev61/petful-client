@@ -1,7 +1,8 @@
-.adopt-line {
-  align-content: center;
+.line-center {
+  margin: auto;
+  width: 30%;
+  padding: 10px;
 }
-
 .adopt-list {
   list-style-type: none;
 }
