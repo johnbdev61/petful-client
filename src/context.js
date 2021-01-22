@@ -65,7 +65,6 @@ export class AppContextProvider extends Component {
   }
 
   setQueue = (queue) => {
-    console.log('QUEUE', queue)
     this.setState({ queue })
   }
 

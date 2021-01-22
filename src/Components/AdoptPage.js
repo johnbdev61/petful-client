@@ -29,7 +29,6 @@ class AdoptPage extends Component {
         this.context.setCurrCat(res[0])
         let peopleQueue = new Queue()
         res[2].forEach((person) => peopleQueue.enqueue(person))
-        console.log('QUEUE', peopleQueue)
         this.context.setQueue(peopleQueue)
       })
       .catch((error) => console.error(error))
@@ -49,7 +48,6 @@ class AdoptPage extends Component {
   }
 
   renderQueue() {
-    console.log(this.context.queue)
     return (
       <AdoptLine
         first={this.context.queue.first.value}
@@ -86,7 +84,6 @@ class AdoptPage extends Component {
   }
 
   renderDog() {
-    console.log(this.context)
     return (
       <PetCard
         pet={this.context.currDog}

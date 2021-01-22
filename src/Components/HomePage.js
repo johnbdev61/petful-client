@@ -12,7 +12,6 @@ class HomePage extends Component {
     this.context.clearError()
     this.context.clearPerson()
     let person = document.getElementById('name').value
-    console.log('NAME', person)
     this.context.setPerson(person)
     return PeopleService.addPerson(person).then((results) => {
       const { location, history } = this.props
@@ -27,7 +26,7 @@ class HomePage extends Component {
         <div className='intro'>
           <h2 className='adopt'>Adopt Pure Love</h2>
           <h3>Let's find you a new best friend!</h3>
-          <img src='https://static.toiimg.com/photo/msid-74508525/74508525.jpg' />
+          <img src='https://static.toiimg.com/photo/msid-74508525/74508525.jpg' alt='two-goldens' />
         </div>
         <div>
           <h3 className='process'>Here is how our process works...</h3>
