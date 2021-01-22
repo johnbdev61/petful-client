@@ -1,0 +1,18 @@
+.adopt-header {
+  font-family: 'Montserrat', sans-serif;
+  text-align: center;
+}
+
+.adoptees {
+  align-content: center;
+}
+
+.center {
+  margin: auto;
+  width: 50%;
+  padding: 10px;
+}
+
+.next-pet {
+  font-family: 'Staatliches', cursive;
+}

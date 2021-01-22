@@ -1,0 +1,16 @@
+.intro {
+  font-family: 'Montserrat', sans-serif;
+  text-align: center;
+}
+
+.process {
+    font-family: 'Staatliches', cursive;
+}
+
+.details, .ready {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.get-started {
+    font-family: 'Staatliches', cursive;
+}

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import AppContext from '../context'
 import PeopleService from '../services/people-service'
 import { Link } from 'react-router-dom'
+import './HomePage.css'
 
 class HomePage extends Component {
   static contextType = AppContext
@@ -24,12 +25,12 @@ class HomePage extends Component {
     return (
       <div>
         <div className='intro'>
-          <h2>Adopt Pure Love</h2>
+          <h2 className='adopt'>Adopt Pure Love</h2>
           <h3>Let's find you a new best friend!</h3>
           <img src='https://static.toiimg.com/photo/msid-74508525/74508525.jpg' />
         </div>
-        <div className='process'>
-          <h3>Here is how our process works...</h3>
+        <div>
+          <h3 className='process'>Here is how our process works...</h3>
           <section className='details'>
             <p>
               These cuddle buddies are in high demand, so customers will need to
@@ -40,17 +41,17 @@ class HomePage extends Component {
           </section>
         </div>
         <section className='adopt-about'>
-          <h3>Let's get started!</h3>
+          <h3 className='get-started'>Preview our Pets</h3>
           <Link to='/adopt'>
             <button>Preview Adoptable Pets</button>{' '}
           </Link>
         </section>
         <form onSubmit={this.handleJoinQueue}>
-          <h3>
+          <h3 className='ready'>
             Are your ready to adopt your new friend? Enter your name below to
             add yourself to the queue of future pet owners!
           </h3>
-          <input aria-label='name' type='text' name='name' id='name' required />
+          <input aria-label='name' type='text' name='name' id='name' placeholder='Enter Name' required />
           <button type='submit'>Join Queue!</button>
         </form>
       </div>

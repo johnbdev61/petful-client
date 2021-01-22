@@ -7,6 +7,7 @@ import DogService from '../services/dog-service'
 import CatService from '../services/cat-service'
 import Queue from '../services/queue'
 import Congratulations from './Congratulations'
+import './AdoptPage.css'
 
 class AdoptPage extends Component {
   static contextType = AppContext
@@ -28,7 +29,7 @@ class AdoptPage extends Component {
         this.context.setCurrCat(res[0])
         let peopleQueue = new Queue()
         res[2].forEach((person) => peopleQueue.enqueue(person))
-        console.log(peopleQueue)
+        console.log('QUEUE', peopleQueue)
         this.context.setQueue(peopleQueue)
       })
       .catch((error) => console.error(error))
@@ -48,6 +49,7 @@ class AdoptPage extends Component {
   }
 
   renderQueue() {
+    console.log(this.context.queue)
     return (
       <AdoptLine
         first={this.context.queue.first.value}
@@ -116,21 +118,22 @@ class AdoptPage extends Component {
     ))
     return (
       <>
-        <div>
+        <div className='adopt-header'>
           <h1>Choose Your Next Best Friend!</h1>
         </div>
-        <section>
+        {this.context.queue.first.next ? this.renderQueue() : 'Loading...'}
+        <div className='center'>
           <div>
-            <h2>Puppies</h2>
+            <h2 className='next-pet'>Puppies</h2>
             {this.renderDog()}
           </div>
           <div>
-            <h2>Kitties</h2>
+            <h2 className='next-pet'>Kitties</h2>
             {this.renderCat()}
           </div>
-        </section>
+        </div>
         <div>
-          <h2>Congratulations!</h2>
+          <hr />
           {petAdopted}
         </div>
       </>

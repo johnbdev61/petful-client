@@ -1,0 +1,15 @@
+.adopt-line {
+  align-content: center;
+}
+
+.adopt-list {
+  list-style-type: none;
+}
+
+.line-header {
+  font-family: 'Staatliches', cursive;
+}
+
+li {
+  font-family: 'Montserrat', sans-serif;
+}
