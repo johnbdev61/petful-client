@@ -1,5 +1,5 @@
 const config = {
-  REACT_APP_API_BASE: 'https://petful-client-template.herokuapp.com'
+  REACT_APP_API_BASE: 'https://petful-john-byrne.herokuapp.com',
   // API_ENDPOINT: 'http://localhost:8000'
 }
 
