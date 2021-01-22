@@ -1,8 +1,8 @@
 # Petful Client
 
-+ Link to [Live Client]()
-+ Link to [Client GitHub Repo]()
-+ Link to [Server GitHub Repo]()
++ Link to [Live Client](https://petful-client-template-topaz.vercel.app/)
++ Link to [Client GitHub Repo](https://github.com/johnbdev61/petful-client)
++ Link to [Server GitHub Repo](https://github.com/johnbdev61/petful-server)
 
 ## App Description
 
