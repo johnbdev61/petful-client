@@ -6,6 +6,7 @@ const CatsService = {
       method: 'GET',
       headers: {
         'content-type': 'application/json',
+        'Accept': 'application/json',
       },
     }).then((res) =>
       !res.ok ? res.json().then((event) => Promise.reject(event)) : res.json()
@@ -16,6 +17,7 @@ const CatsService = {
       method: 'DELETE',
       headers: {
         'content-type': 'application/json',
+        'Accept': 'application/json',
       },
     }).then((res) =>
       !res.ok ? res.json().then((event) => Promise.reject(event)) : res.json()
