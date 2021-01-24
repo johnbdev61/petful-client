@@ -41,7 +41,7 @@ export class AppContextProvider extends Component {
   state = {
     currDog: {},
     currCat: {},
-    queue: { first: {}, dequeue: () => {} },
+    queue: { first: {}, requeue: () => {} },
     people: [],
     person: '',
     adopted: [],
