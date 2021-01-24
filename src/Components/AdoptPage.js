@@ -60,7 +60,7 @@ class AdoptPage extends Component {
   handleDogClick = () => {
     return DogService.deleteDog()
       .then(res => {
-        let owner = this.context.queue.requeue()
+        let owner = this.context.queue.dequeue()
         res.owner = owner
         this.context.setAdopted(res)
       })
@@ -73,7 +73,7 @@ class AdoptPage extends Component {
   handleCatClick = () => {
     return CatService.deleteCat()
       .then(res => {
-        let owner = this.context.queue.requeue()
+        let owner = this.context.queue.dequeue()
         res.owner = owner
         this.context.setAdopted(res)
       })
