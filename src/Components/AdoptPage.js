@@ -50,9 +50,7 @@ class AdoptPage extends Component {
   renderQueue() {
     return (
       <AdoptLine
-        first={this.context.queue.first.value}
-        second={this.context.queue.first.next.value}
-        third={this.context.queue.first.next.next.value}
+        queue={this.context.queue}
       />
     )
   }

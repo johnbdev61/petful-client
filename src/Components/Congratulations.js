@@ -10,6 +10,6 @@ export default class Congratulations extends Component {
         <p>Name: {name}</p>
         <p>New Bestie: {owner}</p>
       </div>
-    )
+    )  
   }
 }
