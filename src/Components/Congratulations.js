@@ -9,6 +9,7 @@ export default class Congratulations extends Component {
         <img src={imgSrc} alt="pet"/>
         <p>Name: {name}</p>
         <p>New Bestie: {owner}</p>
+        <button to='/'>Go to Home</button>
       </div>
     )  
   }

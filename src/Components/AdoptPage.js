@@ -34,7 +34,7 @@ class AdoptPage extends Component {
       .catch((error) => console.error(error))
   }
   cyclePeople = () => {
-    if (this.context.person !== this.context.queue.first.value) {
+    if (this.context.queue.first && this.context.person !== this.context.queue.first.value) {
       let odds = Math.floor(Math.random() * 100)
       if (odds < 50) {
         this.handleDogClick()
@@ -64,7 +64,9 @@ class AdoptPage extends Component {
       })
       .then(res => {
         DogService.getDog().then(res => this.context.setCurrDog(res))
-        this.setState({ nowAdopting: this.context.queue.first.value })
+        if (this.context.queue.first) {
+          this.setState({ nowAdopting: this.context.queue.first.value })
+        }
       })
   }
 
@@ -77,7 +79,9 @@ class AdoptPage extends Component {
       })
       .then(res => {
         CatService.getCat().then(res => this.context.setCurrCat(res))
-        this.setState({ nowAdopting: this.context.queue.first.value })
+        if (this.context.queue.first) {
+          this.setState({ nowAdopting: this.context.queue.first.value })
+        }
       })
   }
 
@@ -126,12 +130,11 @@ class AdoptPage extends Component {
             {this.renderCat()}
           </div>
         </div>
-        {this.context.queue.first.next ? this.renderQueue() : 'Loading...'}
-        <div>
+        {!this.context.queue.first && <div>
           <hr />
           <h2 className='congrats'>Congrats on Your New Bestie!</h2>
           {petAdopted}
-        </div>
+        </div>}
       </>
     )
   }

@@ -7,7 +7,7 @@ export default class PetCard extends Component {
   render() {
     const { pet, handleAdoptClick } = this.props
     let isFirst = false
-    if (this.context.queue) {
+    if (this.context.queue.first) {
       isFirst = this.context.person === this.context.queue.first.value
     }
     return (
