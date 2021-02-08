@@ -34,7 +34,10 @@ class AdoptPage extends Component {
       .catch((error) => console.error(error))
   }
   cyclePeople = () => {
-    if (this.context.queue.first && this.context.person !== this.context.queue.first.value) {
+    if (
+      this.context.queue.first &&
+      this.context.person !== this.context.queue.first.value
+    ) {
       let odds = Math.floor(Math.random() * 100)
       if (odds < 50) {
         this.handleDogClick()
@@ -48,22 +51,18 @@ class AdoptPage extends Component {
   }
 
   renderQueue() {
-    return (
-      <AdoptLine
-        queue={this.context.queue}
-      />
-    )
+    return <AdoptLine queue={this.context.queue} />
   }
 
   handleDogClick = () => {
     return DogService.deleteDog()
-      .then(res => {
+      .then((res) => {
         let owner = this.context.queue.dequeue()
         res.owner = owner
         this.context.setAdopted(res)
       })
-      .then(res => {
-        DogService.getDog().then(res => this.context.setCurrDog(res))
+      .then((res) => {
+        DogService.getDog().then((res) => this.context.setCurrDog(res))
         if (this.context.queue.first) {
           this.setState({ nowAdopting: this.context.queue.first.value })
         }
@@ -72,13 +71,13 @@ class AdoptPage extends Component {
 
   handleCatClick = () => {
     return CatService.deleteCat()
-      .then(res => {
+      .then((res) => {
         let owner = this.context.queue.dequeue()
         res.owner = owner
         this.context.setAdopted(res)
       })
-      .then(res => {
-        CatService.getCat().then(res => this.context.setCurrCat(res))
+      .then((res) => {
+        CatService.getCat().then((res) => this.context.setCurrCat(res))
         if (this.context.queue.first) {
           this.setState({ nowAdopting: this.context.queue.first.value })
         }
@@ -109,9 +108,9 @@ class AdoptPage extends Component {
     const petAdopted = this.context.adopted.map((pet, index) => (
       <div className='congrats' key={index}>
         <Congratulations
-        imgSrc={pet.imageURL}
-        name={pet.name}
-        owner={pet.owner}
+          imgSrc={pet.imageURL}
+          name={pet.name}
+          owner={pet.owner}
         />
       </div>
     ))
@@ -119,6 +118,9 @@ class AdoptPage extends Component {
       <>
         <div className='adopt-header'>
           <h1>Choose Your Next Best Friend!</h1>
+          {this.context.queue.firt.next
+            ? this.renderQueue()
+            : 'Loading Pets! ...'}
         </div>
         <div className='center'>
           <div>
@@ -130,11 +132,13 @@ class AdoptPage extends Component {
             {this.renderCat()}
           </div>
         </div>
-        {!this.context.queue.first && <div>
-          <hr />
-          <h2 className='congrats'>Congrats on Your New Bestie!</h2>
-          {petAdopted}
-        </div>}
+        {!this.context.queue.first && (
+          <div>
+            <hr />
+            <h2 className='congrats'>Congrats on Your New Bestie!</h2>
+            {petAdopted}
+          </div>
+        )}
       </>
     )
   }
