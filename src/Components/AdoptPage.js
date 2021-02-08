@@ -58,7 +58,9 @@ class AdoptPage extends Component {
     return DogService.deleteDog()
       .then((res) => {
         let owner = this.context.queue.dequeue()
-        res.owner = owner
+        if (owner) {
+          res.owner = owner
+        }
         this.context.setAdopted(res)
       })
       .then((res) => {
@@ -73,7 +75,9 @@ class AdoptPage extends Component {
     return CatService.deleteCat()
       .then((res) => {
         let owner = this.context.queue.dequeue()
-        res.owner = owner
+        if (owner) {
+          res.owner = owner
+        }
         this.context.setAdopted(res)
       })
       .then((res) => {
@@ -118,9 +122,9 @@ class AdoptPage extends Component {
       <>
         <div className='adopt-header'>
           <h1>Choose Your Next Best Friend!</h1>
-          {this.context.queue.firt.next
+          {this.context.queue.first && this.context.queue.first.next
             ? this.renderQueue()
-            : 'Loading Pets! ...'}
+            : 'Loading...'}
         </div>
         <div className='center'>
           <div>
